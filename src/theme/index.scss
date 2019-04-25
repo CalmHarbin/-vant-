@@ -1,0 +1,19 @@
+$bgcolor: #4f77aa; //企业微信顶部背景色
+$btnBgcolor: #0973d7; //按钮常用蓝色
+$bg: #f5f5f5;
+$solid: #ddd; //线条颜色
+$margin: 0.2rem; //外间距
+$padding: 0.3rem; //内间距
+
+// vant全局修改样式
+.van-swipe__indicator {
+    width: 8px;
+    height: 8px;
+}
+.van-field__body {
+    height: 100%;
+}
+//解决弹出层字体模糊问题
+// .van-popup--bottom {
+//     // transform: translate(-50%, 0);
+// }
