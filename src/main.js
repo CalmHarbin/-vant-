@@ -78,36 +78,36 @@ Vue.prototype.$loading.clear = () => {
 }
 
 //针对ios微信流量器调用sdk的地址栏不改变的bug
-router.beforeEach((to, from, next) => {
-    let info = navigator.userAgent.toLowerCase()
-    //如果是ios微信浏览器
-    if (
-        info.indexOf('iphone') !== -1 &&
-        info.indexOf('micromessenger') !== -1 &&
-        info.indexOf('wxwork') === -1
-    ) {
-        if (!wxSdjUrl) {
-            wxSdjUrl = from.name
-                ? location.origin +
-                  router.options.base +
-                  to.path +
-                  (qs.stringify(to.query)
-                      ? '?' + qs.stringify(to.query)
-                      : qs.stringify(to.query))
-                : document.URL
-        }
-    } else {
-        wxSdjUrl = from.name
-            ? location.origin +
-              router.options.base +
-              to.path +
-              (qs.stringify(to.query)
-                  ? '?' + qs.stringify(to.query)
-                  : qs.stringify(to.query))
-            : document.URL
-    }
-    next()
-})
+// router.beforeEach((to, from, next) => {
+//     let info = navigator.userAgent.toLowerCase()
+//     //如果是ios微信浏览器
+//     if (
+//         info.indexOf('iphone') !== -1 &&
+//         info.indexOf('micromessenger') !== -1 &&
+//         info.indexOf('wxwork') === -1
+//     ) {
+//         if (!wxSdjUrl) {
+//             wxSdjUrl = from.name
+//                 ? location.origin +
+//                   router.options.base +
+//                   to.path +
+//                   (qs.stringify(to.query)
+//                       ? '?' + qs.stringify(to.query)
+//                       : qs.stringify(to.query))
+//                 : document.URL
+//         }
+//     } else {
+//         wxSdjUrl = from.name
+//             ? location.origin +
+//               router.options.base +
+//               to.path +
+//               (qs.stringify(to.query)
+//                   ? '?' + qs.stringify(to.query)
+//                   : qs.stringify(to.query))
+//             : document.URL
+//     }
+//     next()
+// })
 
 new Vue({
     router,

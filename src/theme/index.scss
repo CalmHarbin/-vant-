@@ -13,6 +13,9 @@ $padding: 0.3rem; //内间距
 .van-field__body {
     height: 100%;
 }
+.van-search__action:active {
+    background-color: transparent;
+}
 //解决弹出层字体模糊问题
 // .van-popup--bottom {
 //     // transform: translate(-50%, 0);

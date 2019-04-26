@@ -27,7 +27,7 @@
                     class="img"
                     v-for="(item, index) in files"
                     ref="imgBox"
-                    @click.stop="see(index)"
+                    @click.stop="see(index, item.type)"
                     :key="index"
                 >
                     <img src="./default.png" alt="" v-if="item.type === 0" />
@@ -228,26 +228,38 @@ export default {
          * @method upload
          * @returns {undefined}
          */
-        see(index) {
+        see(index, type) {
             let that = this
-            wx.checkJsApi({
-                jsApiList: ['previewFile'], // 需要检测的JS接口列表，所有JS接口列表见附录2,
-                success: function(res) {
-                    // 以键值对的形式返回，可用的api值true，不可用为false
-                    // 如：{"checkResult":{"chooseImage":true},"errMsg":"checkJsApi:ok"}
-                    if (res.checkResult.previewFile) {
-                        wx.previewFile({
-                            url: config.serverUrl + that.files[index].src, // 需要预览文件的地址(必填，可以使用相对路径)
-                            size: that.files[index].size * 1 // 需要预览文件的字节大小(必填)
-                        })
-                    } else {
-                        location.href = that.files[index].src
+            if (type === 1) {
+                //使用图片预览sdk
+                wx.previewImage({
+                    current: that.config.serverUrl + that.files[index].src, // 当前显示图片的http链接
+                    urls: [that.config.serverUrl + that.files[index].src] // 需要预览的图片http链接列表
+                })
+            } else {
+                //使用附件预览sdk
+                wx.checkJsApi({
+                    jsApiList: ['previewFile'], // 需要检测的JS接口列表，所有JS接口列表见附录2,
+                    success: function(res) {
+                        // 以键值对的形式返回，可用的api值true，不可用为false
+                        // 如：{"checkResult":{"chooseImage":true},"errMsg":"checkJsApi:ok"}
+                        if (res.checkResult.previewFile) {
+                            wx.previewFile({
+                                url:
+                                    that.config.serverUrl +
+                                    that.files[index].src, // 需要预览文件的地址(必填，可以使用相对路径)
+                                size: that.files[index].size * 1 // 需要预览文件的字节大小(必填)
+                            })
+                        } else {
+                            location.href =
+                                that.config.serverUrl + that.files[index].src
+                        }
                     }
-                }
-            })
+                })
+            }
         },
         /**
-         * 微信sdk
+         * 微信sdk---东风项目
          * @method upload
          * @returns {undefined}
          */

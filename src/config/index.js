@@ -5,7 +5,7 @@ const config = {
     serverUrl:
         process.env.NODE_ENV === 'development'
             ? ''
-            : 'http://www.hnyyyz.com:8089', //服务器地址
+            : 'http://wechat.dfd.cn:8084', //服务器地址
     routeUrl: '/MobileWork/AppDefalut', //路由前缀
     staticUrl: vueConfig.publicPath + vueConfig.assetsDir //静态资源
 }

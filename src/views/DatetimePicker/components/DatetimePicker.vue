@@ -20,6 +20,7 @@
                 :max-minute="maxMinute"
                 :formatter="formatter"
                 @confirm="onConfirm"
+                @cancel="$emit('input', false)"
             />
         </van-popup>
     </div>
@@ -234,6 +235,9 @@ export default {
     watch: {
         value(newVal) {
             this.show = newVal
+        },
+        time(newVal) {
+            this.formatter_time = newVal.replace(/-/g, '/') //防止格式不统一  2019-12-12  和 2019/12/12
         }
     }
 }

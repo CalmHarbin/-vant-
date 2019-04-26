@@ -18,6 +18,9 @@
             </ul>
             <div class="label">使用说明:</div>
             <p>此组件不依赖Vant,可直接使用.源码地址<br />XXXXX</p>
+            <div v-for="item in 20" :key="item" style="margin-top:150px;">
+                为了方便看动画效果{{ item }}-----------------
+            </div>
         </div>
         <div>你该向上滚啦~</div>
         <GoTop></GoTop>

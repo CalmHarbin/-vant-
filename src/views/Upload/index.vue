@@ -9,12 +9,12 @@
 
         <div class="cell">微信图片上传</div>
         <div style="backgroundColor:#fff;padding:0 8px;">
-            <Wxupload :files="wxFiles"></Wxupload>
+            <Wxupload :files="wxFiles" :maxNum="12"></Wxupload>
         </div>
 
         <div class="cell">微信图片预览</div>
         <div style="backgroundColor:#fff;padding:0 8px;">
-            <Wxupload :files="wxFiles" :isSee="true"></Wxupload>
+            <Wxupload :files="wxFiles_see" :isSee="true"></Wxupload>
         </div>
 
         <div class="box">
@@ -101,6 +101,12 @@ export default {
                 }
             ],
             wxFiles: [
+                'https://ss3.baidu.com/-rVXeDTa2gU2pMbgoY3K/it/u=1362208881,3931895225&fm=202',
+                'https://ss3.baidu.com/-rVXeDTa2gU2pMbgoY3K/it/u=1362208881,3931895225&fm=202',
+                'https://ss3.baidu.com/-rVXeDTa2gU2pMbgoY3K/it/u=1362208881,3931895225&fm=202',
+                'https://ss3.baidu.com/-rVXeDTa2gU2pMbgoY3K/it/u=1362208881,3931895225&fm=202'
+            ],
+            wxFiles_see: [
                 'https://ss3.baidu.com/-rVXeDTa2gU2pMbgoY3K/it/u=1362208881,3931895225&fm=202',
                 'https://ss3.baidu.com/-rVXeDTa2gU2pMbgoY3K/it/u=1362208881,3931895225&fm=202',
                 'https://ss3.baidu.com/-rVXeDTa2gU2pMbgoY3K/it/u=1362208881,3931895225&fm=202',

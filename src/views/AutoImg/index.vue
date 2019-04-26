@@ -5,30 +5,35 @@
             src="https://ss3.baidu.com/-rVXeDTa2gU2pMbgoY3K/it/u=1362208881,3931895225&fm=202"
             alt=""
         />
+
         <div class="cell">100 x 100</div>
         <AutoImg
             url="https://ss3.baidu.com/-rVXeDTa2gU2pMbgoY3K/it/u=1362208881,3931895225&fm=202"
             width="100px"
             height="100px"
         />
-        <div class="cell">100 x 200</div>
+
+        <div class="cell">calc(100% - 50px) x calc(30vh - 50px)</div>
         <AutoImg
             url="https://ss3.baidu.com/-rVXeDTa2gU2pMbgoY3K/it/u=1362208881,3931895225&fm=202"
             width="calc(100% - 50px)"
             height="calc(30vh - 50px)"
         />
+
         <div class="cell">200 x 100</div>
         <AutoImg
             url="https://ss3.baidu.com/-rVXeDTa2gU2pMbgoY3K/it/u=1362208881,3931895225&fm=202"
             width="200px"
             height="100px"
         />
+
         <div class="cell">150 x 100</div>
         <AutoImg
             url="https://ss3.baidu.com/-rVXeDTa2gU2pMbgoY3K/it/u=1362208881,3931895225&fm=202"
             width="150px"
             height="100px"
         />
+
         <div style="padding: 0 15px">
             <div class="label">组件说明:</div>
             <ul>
