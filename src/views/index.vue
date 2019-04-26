@@ -8,7 +8,7 @@
             基于Vant的常用组件
         </div>
         <p class="info">轻量、可靠的移动端Vue组件库</p>
-        <van-cell title="自动表单" is-link />
+        <van-cell title="自动表单" :to="{ name: 'AutoForm' }" is-link />
         <van-cell title="置顶" :to="{ name: 'GoTop' }" is-link />
         <van-cell title="搜索框" :to="{ name: 'Search' }" is-link />
         <van-cell title="附件上传" :to="{ name: 'Upload' }" is-link />
@@ -16,17 +16,14 @@
         <van-cell title="操作反馈" :to="{ name: 'Feedback' }" is-link />
         <van-cell title="上拉菜单" :to="{ name: 'Actionsheet' }" is-link />
         <van-cell title="时间选择器" :to="{ name: 'DatetimePicker' }" is-link />
-        <demo1></demo1>
     </div>
 </template>
 
 <script>
-import demo1 from './AutoFrom/demo1'
 export default {
     data() {
         return {}
-    },
-    components: { demo1 }
+    }
 }
 </script>
 

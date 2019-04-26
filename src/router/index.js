@@ -4,6 +4,18 @@ import config from '@/config/index'
 
 Vue.use(Router)
 
+const AutoForm = [
+    {
+        path: '/AutoForm',
+        name: 'AutoForm',
+        component: () => import('@/views/AutoForm/index'),
+        meta: {
+            title: '自动表单', // 标题设置在这里
+            keepAlive: false //是否缓存当前页面
+        }
+    }
+]
+
 const GoTop = [
     {
         path: '/GoTop',
@@ -92,6 +104,7 @@ export default new Router({
     // mode: 'history',
     base: config.routeUrl,
     routes: [
+        ...AutoForm,
         ...GoTop,
         ...Search,
         ...Upload,
