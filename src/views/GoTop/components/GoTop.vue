@@ -35,7 +35,6 @@ export default {
     },
     mounted() {
         let Timer = null
-
         this.el.onscroll = () => {
             if (Timer) clearTimeout(Timer)
             Timer = setTimeout(() => {

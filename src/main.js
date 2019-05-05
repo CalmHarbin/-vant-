@@ -30,7 +30,10 @@ import {
     Cell,
     CellGroup,
     Picker,
-    DatetimePicker
+    DatetimePicker,
+    Switch,
+    RadioGroup,
+    Radio
 } from 'vant'
 Vue.use(Swipe)
     .use(SwipeItem)
@@ -48,6 +51,9 @@ Vue.use(Swipe)
     .use(CellGroup)
     .use(Picker)
     .use(DatetimePicker)
+    .use(Switch)
+    .use(RadioGroup)
+    .use(Radio)
 Vue.prototype.$toast = Toast
 Vue.prototype.$dialog = Dialog
 

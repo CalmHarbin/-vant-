@@ -1,145 +1,5 @@
 <!--
-用法:
-    {   
-        type: 1,//输入框
-        inputType: 'text',
-        label: '姓名',
-        key: '',
-        value: '',
-        placeholder: '请输入姓名',
-        maxlength: 35,
-        readonly: false,
-        info: '为空描述',
-        required: false,
-        regExp: /^\d*\d$/,
-        regExpInfo: '正则描述',
-        class: '',//自定义样式,类
-        hidden: false,//隐藏字段
-        callback: function
-    },
-    {
-        type: 2,//组织架构选人,单选
-        value: {id: '',name:''},
-        key: '',
-        label: '负责人',
-        readonly: false,
-        info: '为空描述',
-        required: false,
-        class: '',//自定义样式,类
-        hidden: false,//隐藏字段
-        callback: function
-    },
-    {
-        type: 3,//上拉菜单选择,单选
-        label: '出行方式',
-        key: '',
-        value: '公交车',
-        data: ['公交车', '火车'],
-        readonly: false,
-        info: '为空描述',
-        required: false,
-        class: '',//自定义样式,类
-        hidden: false,//隐藏字段
-        callback: function
-    },
-
-    {
-        type: 4,//多行文本框
-        label: '内容',
-        key: '',
-        value: '',
-        readonly: false,
-        placeholder: '请输入姓名',
-        info: '为空描述',
-        required: false,
-        maxlength: 200,
-        regExp: /^\d*\d$/,
-        regExpInfo: '正则描述',
-        class: '',//自定义样式,类
-        hidden: false,//隐藏字段
-        callback: function
-    },
-    {
-        type: 5,//时间组件
-        value: '2018-01-01',
-        key: '',
-        dateType: 'date',//时间组件类型,date|time|datetime  详见ydui时间组件
-        readonly: false,
-        info: '为空描述',
-        required: false,
-        class: '',//自定义样式,类
-        hidden: false,//隐藏字段
-        callback: function
-    },
-    {
-        type: 6,//附件,任意类型附件
-        label: '附件',
-        value: [],
-        key: '',
-        readonly: false,
-        info: '为空描述',
-        required: false,
-        class: '',//自定义样式,类
-        hidden: false,//隐藏字段
-        callback: function
-    },
-    {
-        type: 7,//一个按钮
-        label: '提交',
-        readonly: false,
-        bgcolor: '#10a6b7',//背景颜色
-        color: '#fff',//文字颜色
-        class: '',//自定义样式,类
-        hidden: false,//隐藏字段
-        callback: function
-    },
-    {
-        type: 8,//上拉菜单选择,含有id,单选
-        label: '出行方式',
-        key: '',
-        value: {id: '1', name: '公交车'},
-        data: [{id: '1', name: '公交车'}, {id: '2', name: '火车'}],
-        readonly: false,
-        info: '为空描述',
-        required: false,
-        class: '',//自定义样式,类
-        hidden: false,//隐藏字段
-        callback: function
-    },
-    {
-        type: 9,//多选
-        label: '乘车方式',
-        key: '',
-        value: [],
-        data: ['选项一', '选项二'],
-        horizontal: true,//水平排列
-        class: '',//自定义样式,类
-        hidden: false,//隐藏字段
-        callback: function
-    },
-    {
-        type: 10,//开关单选
-        label: '乘车方式',
-        key: '',
-        value: [],
-        data: ['开', '关'],
-        show: fasle,//是否显示文字
-        class: '',//自定义样式,类
-        hidden: false,//隐藏字段
-        callback: function
-    },
-    {
-        type: 11,//多数据时,左侧弹出选择框,支持单选和多选.
-        label: '项目类别',
-        key: '',
-        data: [{id: '1', name: '公交车'}, {id: '2', name: '火车'}],
-        readonly: false,
-        info: '为空描述',
-        required: false,
-        class: '',//自定义样式,类
-        hidden: false,//隐藏字段
-        callback: function
-    },
+具体用法见demo
 插槽功能 slot
 slot='top',//在顶部
 slot='bottom',//在底部
@@ -192,6 +52,7 @@ slot='key',//在key的后面
                 :key="index"
                 v-model="form[item.key]"
                 :required="item.required"
+                :disabled="item.disabled"
                 :label="item.label"
                 :input-align="styles"
                 :type="item.inputType"
@@ -216,9 +77,17 @@ slot='key',//在key的后面
         <template v-else-if="item.type === 3">
             <van-cell
                 :title="item.label"
+                :class="
+                    item.hidden
+                        ? 'none ' +
+                          (item.class ? item.class : '') +
+                          (item.required ? ' van-cell--required' : '')
+                        : item.class +
+                          (item.required ? ' van-cell--required' : '')
+                "
                 is-link
                 :value="item.data[item.value]"
-                @click.native="item.show = true && $forceUpdate()"
+                @click.native="item.disabled || (item.show = true)"
             />
             <Actionsheet
                 v-model="item.show"
@@ -231,14 +100,6 @@ slot='key',//在key的后面
             <slot :name="item.key"></slot>
         </template>
 
-        <!-- 含有id的上拉菜单 -->
-        <!-- <template v-else-if="item.type === 8">
-            <div  :class='item.hidden ? "none "+(item.class ? item.class : "") : item.class' :key='index' v-if='item.data.length'>
-                <formSelect :data='item.data_name_list' :isdefault='item.default' :title='item.label' :Hit='item.data_name' :readonly='item.readonly' :required='item.required'  @change="(text) => changeFormSelect(text, item)"></formSelect>
-            </div>
-            <slot :name='item.key'></slot>
-        </template> -->
-
         <!-- 多行文本框 -->
         <template v-else-if="item.type === 4">
             <van-field
@@ -250,8 +111,8 @@ slot='key',//在key的后面
                 :key="index"
                 v-model="form[item.key]"
                 :required="item.required"
+                :disabled="item.disabled"
                 :label="item.label"
-                :input-align="styles"
                 type="textarea"
                 :readonly="item.readonly"
                 :placeholder="item.placeholder"
@@ -266,58 +127,90 @@ slot='key',//在key的后面
         </template>
 
         <!-- 时间组件,默认年月日时分 -->
-        <!-- <template v-else-if="item.type === 5">
-            <yd-cell-item  :class='item.hidden ? "none "+(item.class ? item.class : "") : item.class' :key='index' arrow>
-                <span slot="left">{{item.label}}<i class='required' v-if='item.required'>*</i></span>
-                <input slot="right" type="text" readonly v-model="form[item.key]" v-if='item.readonly'>
-                <yd-datetime :type="item.dateType" :start-date="item.startDate" v-model="form[item.key]" slot="right" :callback="(date) => changeDate(date,item.callback)" v-else></yd-datetime>
-            </yd-cell-item>
-            <slot :name='item.key'></slot>
-        </template> -->
-
-        <!-- 附件 -->
-        <!-- <template v-else-if="item.type === 6">
-            <div  :class='item.hidden ? "none "+(item.class ? item.class : "") : item.class' :key='index'>
-                <p style="padding-left: .24rem;color: #555;margin-top: 10px;">{{item.label}}<i class='required' v-if='item.required'>*</i></p>
-                <upload :files="form[item.key]" :isSee='item.readonly' @change="(files) => changeFiles(files, item.key, item.callback)"></upload>
-            </div>
-            <slot :name='item.key'></slot>
-        </template> -->
-
-        <!-- 多选,不含id -->
-        <!-- <template v-else-if="item.type === 9">
-            <div  :class='item.hidden ? "none "+(item.class ? item.class : "") : item.class' :key='index'>
-                <p style="padding-left: .24rem;color: #555;margin-top: 10px;">{{item.label}}<i class='required' v-if='item.required'>*</i></p>
-                <div class="checkbox_wrap" :class="{'verticality': !item.horizontal}">
-                    <yd-checkbox-group v-model="form[item.key]" :callback='(checked) => item.callback && item.callback(checked)' >
-                        <yd-checkbox :val="i" v-for='i in item.data' :disabled='item.readonly' :key='i'>{{i}}</yd-checkbox>
-                    </yd-checkbox-group>
-                </div>
-            </div>
-            <slot :name='item.key'></slot>
-        </template> -->
+        <template v-else-if="item.type === 5">
+            <van-cell
+                :title="item.label"
+                :class="
+                    item.hidden
+                        ? 'none ' +
+                          (item.class ? item.class : '') +
+                          (item.required ? ' van-cell--required' : '')
+                        : item.class +
+                          (item.required ? ' van-cell--required' : '')
+                "
+                is-link
+                :value="item.value"
+                @click.native="item.disabled || (item.show = true)"
+            />
+            <DatetimePicker
+                v-model="item.show"
+                :type="item.dateType"
+                :time="item.value"
+                :minDate="item.minDate"
+                :maxDate="item.maxDate"
+                :minHour="item.minHour"
+                :maxHour="item.maxHour"
+                :minMinute="item.minMinute"
+                :maxMinute="item.maxMinute"
+                @confirm="value => changeTime(item, value)"
+            ></DatetimePicker>
+            <slot :name="item.key"></slot>
+        </template>
 
         <!-- 开关 -->
-        <!-- <template v-else-if="item.type === 10">
-            <yd-cell-item class='switch'  :class='item.hidden ? "none "+(item.class ? item.class : "") : item.class' :key='index'>
-                <span slot="left">{{item.label}}<i class='required' v-if='item.required'>*</i></span>
-                <div slot="right" style="display: flex;align-items: center;">
-                    <yd-switch v-model="form[item.key]" :callback="(state) => item.callback && item.callback(state)"></yd-switch>
-                    <span style="font-size: 14px;margin-left: 5px" v-if='item.show'>{{form[item.key] ? item.data[0] : item.data[1]}}</span>
-                </div>
-            </yd-cell-item>
-            <slot :name='item.key'></slot>
-        </template> -->
+        <template v-else-if="item.type === 10">
+            <van-cell
+                :title="item.label"
+                class="switch"
+                :class="
+                    item.hidden
+                        ? 'none ' +
+                          (item.class ? item.class : '') +
+                          (item.required ? ' van-cell--required' : '')
+                        : item.class +
+                          (item.required ? ' van-cell--required' : '')
+                "
+            >
+                <van-switch
+                    slot="right-icon"
+                    v-model="form[item.key]"
+                    active-color="#5875ed"
+                    inactive-color="#f5f5f5"
+                    :disabled="item.disabled"
+                    size="22px"
+                    @change="state => item.callback && item.callback(state)"
+                />
+            </van-cell>
+            <slot :name="item.key"></slot>
+        </template>
 
-        <!-- 多数据时,左侧弹出选择框,支持单选和多选. -->
-        <!-- <template v-else-if='item.type === 11'>
-            <yd-cell-item @click.native='() => {!item.readonly && (item.show = true)}' arrow :class='item.hidden ? "none "+(item.class ? item.class : "") : item.class' :key='index'>
-                <span slot="left" >{{item.label}}<i class='required' v-if='item.required'>*</i></span>
-                <input slot="right" type="text" :placeholder="item.placeholder" v-model="form[item.key].name" :maxlength="item.maxlength" :readonly="item.readonly" disabled />
-            </yd-cell-item>
-            <pick :select='item.select' :search='item.search' :bgcolor='item.bgcolor' :color='item.color' :btnText='item.btnText' :isCheckbox='item.isCheckbox' :isloadList='item.isloadList' :isSearch='item.isSearch' :width='item.width' :data="item.data" v-model="item.show" :isAvatar='item.isAvatar' @search='(text, callback) => item.searchCallback && item.searchCallback(text, callback)' @loadList='(text, callback) => item.loadList && item.loadList(text, callback)' @change='(value,data) => pickChange(value,data,item)'></pick>
-            <slot :name='item.key'></slot>
-        </template> -->
+        <!-- 单选 -->
+        <template v-else-if="item.type === 11">
+            <van-cell
+                :title="item.label"
+                class="switch"
+                :class="
+                    item.hidden
+                        ? 'none ' +
+                          (item.class ? item.class : '') +
+                          (item.required ? ' van-cell--required' : '')
+                        : item.class +
+                          (item.required ? ' van-cell--required' : '')
+                "
+            >
+                <van-radio-group
+                    slot="right-icon"
+                    class="flex"
+                    :disabled="item.disabled"
+                    v-model="form[item.key]"
+                >
+                    <van-radio :name="i" v-for="i of item.data" :key="i">{{
+                        i
+                    }}</van-radio>
+                </van-radio-group>
+            </van-cell>
+            <slot :name="item.key"></slot>
+        </template>
 
         <!-- 一个按钮 -->
         <template v-else-if="item.type === 7">
@@ -347,16 +240,17 @@ slot='key',//在key的后面
 <script>
 /* eslint-disable vue/no-use-v-if-with-v-for */
 import Actionsheet from '../../Actionsheet/components/Actionsheet'
+import DatetimePicker from '../../DatetimePicker/components/DatetimePicker'
 import { wxSDK } from '@/api/api'
 export default {
     name: 'AutoForm',
-    components: { Actionsheet },
+    components: { Actionsheet, DatetimePicker },
     props: {
         value: Object,
         styles: {
             //页面风格,默认居左,right居右
             type: String,
-            default: 'left'
+            default: 'right'
         },
         data: {
             type: Array,
@@ -459,18 +353,6 @@ export default {
             )
         },
         /**
-         * 上拉菜单选择
-         * @method formSelectChange
-         * @param {String} text 选中的值
-         * @param {String} key 当前key值
-         * @param {Function} callback 值改变时回调
-         * @returns {undefined}
-         */
-        formSelectChange(text, key, callback) {
-            this.form[key] = text
-            callback && callback(text)
-        },
-        /**
          * 附件
          * @method upload
          * @param {Array} files 附件
@@ -483,14 +365,29 @@ export default {
             callback && callback(files)
         },
         /**
-         * 时间
-         * @method upload
-         * @param {String} date 改变后的时间
+         * 时间选择器
+         * @method changeTime
+         * @param {Array} files 附件
+         * @param {String} key 当前key值
          * @param {Function} callback 值改变时回调
          * @returns {undefined}
          */
-        changeDate(date, callback) {
-            callback && callback(date)
+        changeTime(item, value) {
+            this.form[item.key] = value
+            item.value = value
+            item.callback && item.callback(value)
+        },
+        /**
+         * 上拉菜单选中
+         * @method confirm_Actionsheet
+         * @param { String } value 选中值
+         * @param { index } index 索引
+         * @param { Object } item 对象
+         * @returns {undefined}
+         */
+        confirm_Actionsheet(value, index, item) {
+            this.form[item.key] = value
+            item.value = index
         },
         /**
          * 确定
@@ -529,45 +426,6 @@ export default {
             }
             //执行回调
             callback && callback(this.form)
-        },
-        /**
-         * 确定
-         * @method submit
-         * @param {String} value 当前选中的值
-         * @param {String} index 选中索引
-         * @param {String} item 当前对象
-         * @returns {undefined}
-         */
-        confirm_Actionsheet(value, index, item) {
-            this.form[item.key] = value
-            item.value = index
-            item.callback && item.callback(value, index)
-        },
-        /**
-         * 左侧选择确定回调
-         * @method pickChange
-         * @param {String} text 当前选中的值
-         * @param {String} obj 当前的对象
-         * @returns {undefined}
-         */
-        pickChange(value, data, item) {
-            item.select = value
-            if (item.isCheckbox) {
-                this.form[item.key] = {
-                    id: null,
-                    name: value.length + '个'
-                }
-                let arr = []
-                for (let item of value) {
-                    arr.push(data[item])
-                }
-                //多选时返回数组
-                item.callback && item.callback(arr)
-            } else {
-                this.form[item.key] = data[value[0]]
-                //单选时返回对象
-                item.callback && item.callback(data[value[0]])
-            }
         },
         /**
          * 更新数据
@@ -624,7 +482,9 @@ export default {
                     if (!this.form[item.key]) {
                         this.form[item.key] = item.data.length && item.data[0] //默认选中第一项
                     }
-                    item.show = false
+                    if (item.show === undefined) {
+                        this.$set(item, 'show', false)
+                    }
                 }
                 //textare
                 if (item.type === 4) {
@@ -643,14 +503,61 @@ export default {
                 //时间组件,默认年月日
                 if (item.type === 5) {
                     item.dateType =
-                        item.dateType !== undefined ? item.dateType : 'date'
-                    item.startDate =
-                        item.startDate !== undefined
-                            ? item.startDate
-                            : this.$GetDateTime(new Date(), 'Y-m-d')
-                    this.form[item.key] = this.form[item.key]
-                        ? this.form[item.key]
-                        : this.$GetDateTime(new Date(), 'Y-m-d')
+                        item.dateType !== undefined ? item.dateType : 'datetime'
+                    item.minDate =
+                        item.minDate !== undefined
+                            ? item.minDate
+                            : new Date('2010/01/01 00:00')
+                    item.maxDate =
+                        item.maxDate !== undefined
+                            ? item.maxDate
+                            : new Date('2036/12/31 23:59')
+                    item.minHour = item.minHour !== undefined ? item.minHour : 0
+                    item.maxHour =
+                        item.maxHour !== undefined ? item.maxHour : 23
+                    item.minMinute =
+                        item.minMinute !== undefined ? item.minMinute : 0
+                    item.maxMinute =
+                        item.maxMinute !== undefined ? item.maxMinute : 59
+                    if (item.dateType === 'datetime') {
+                        // "2019-12-11 22:12"
+                        item.value =
+                            item.value !== undefined
+                                ? item.value
+                                : this.GetDateTime(new Date(), 'Y-m-d h:i')
+                        this.form[item.key] = this.form[item.key]
+                            ? this.form[item.key]
+                            : this.GetDateTime(new Date(), 'Y-m-d h:i')
+                    } else if (item.dateType === 'date') {
+                        // "2019-12-11"
+                        item.value =
+                            item.value !== undefined
+                                ? item.value
+                                : this.GetDateTime(new Date(), 'Y-m-d')
+                        this.form[item.key] = this.form[item.key]
+                            ? this.form[item.key]
+                            : this.GetDateTime(new Date(), 'Y-m-d')
+                    } else if (item.dateType === 'year-month') {
+                        // "2019-12"
+                        item.value =
+                            item.value !== undefined
+                                ? item.value
+                                : this.GetDateTime(new Date(), 'Y-m')
+                        this.form[item.key] = this.form[item.key]
+                            ? this.form[item.key]
+                            : this.GetDateTime(new Date(), 'Y-m')
+                    } else if (item.dateType === 'time') {
+                        item.value =
+                            item.value !== undefined
+                                ? item.value
+                                : this.GetDateTime(new Date(), 'h:i')
+                        this.form[item.key] = this.form[item.key]
+                            ? this.form[item.key]
+                            : this.GetDateTime(new Date(), 'h:i')
+                    }
+                    if (item.show === undefined) {
+                        this.$set(item, 'show', false)
+                    }
                 }
                 //附件
                 if (item.type === 6) {
@@ -797,6 +704,64 @@ export default {
                 }
             }
             return true
+        },
+        /*
+         * 时间格式化
+         * @method GetDateTime
+         * @param {Object} dateObj 时间对象 new Date()
+         * @param {string} format 格式 例如 'Y-m-d h:i:s'
+         * @return {string}
+         */
+        GetDateTime(dateObj, format) {
+            if (dateObj) {
+                if (typeof dateObj === 'string') {
+                    let tempIndex = dateObj.lastIndexOf('.')
+                    if (tempIndex > -1) {
+                        dateObj = dateObj.substring(0, tempIndex)
+                    }
+
+                    dateObj = dateObj.replace('T', ' ').replace(/-/g, '/')
+                }
+                let date = new Date(dateObj)
+
+                let obj = {
+                    y: date.getFullYear(),
+                    m: date.getMonth() + 1,
+                    d: date.getDate(),
+                    h: date.getHours(),
+                    min: date.getMinutes(),
+                    s: date.getSeconds()
+                }
+                for (const key in obj) {
+                    if (obj.hasOwnProperty(key)) {
+                        let element = obj[key]
+                        obj[key] = element < 10 ? '0' + element : element
+                    }
+                }
+                if (format) {
+                    return format
+                        .replace('Y', obj.y)
+                        .replace('m', obj.m)
+                        .replace('d', obj.d)
+                        .replace('h', obj.h)
+                        .replace('i', obj.min)
+                        .replace('s', obj.s)
+                }
+
+                return (
+                    obj.y +
+                    '-' +
+                    obj.m +
+                    '-' +
+                    obj.d +
+                    ' ' +
+                    obj.h +
+                    ':' +
+                    obj.min +
+                    ':' +
+                    obj.s
+                ) //返回时间格式
+            } else return ''
         }
     },
     watch: {
@@ -933,6 +898,12 @@ input[disabled],
     .van-field__control {
         padding: 0 5px;
     }
+    .flex {
+        display: flex;
+        .van-radio {
+            margin-left: 15px;
+        }
+    }
 }
 .btn_blcok {
     display: block;
@@ -945,5 +916,8 @@ input[disabled],
     border: none;
     outline: none;
     font-size: 17px;
+}
+.btn_blcok:active {
+    opacity: 0.8;
 }
 </style>

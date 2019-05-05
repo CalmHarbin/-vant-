@@ -20,3 +20,21 @@ $padding: 0.3rem; //内间距
 // .van-popup--bottom {
 //     // transform: translate(-50%, 0);
 // }
+
+//解决ios低版本微信浏览器picker组件无法滑动的问题
+.van-picker-column {
+    position: relative;
+    z-index: 1;
+    &::before {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        content: '';
+    }
+    & > ul {
+        z-index: -1;
+        position: relative;
+    }
+}

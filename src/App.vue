@@ -32,6 +32,10 @@ img {
     height: auto;
     border: none;
 }
+body,
+html {
+    height: 100%;
+}
 body {
     width: 100%;
     overflow-x: hidden;
@@ -41,6 +45,7 @@ body {
     color: #333;
     -webkit-overflow-scrolling: touch;
 }
+//解决ios光标不随页面滚动的bug
 #app {
     min-height: calc(100% + 1px);
 }
