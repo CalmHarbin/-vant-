@@ -4,7 +4,6 @@ import App from './App.vue'
 import router from './router/index'
 import VueWechatTitle from 'vue-wechat-title'
 import utils from '@/utils/index'
-import qs from 'qs'
 //原型上绑定配置文件
 import config from './config/index'
 Vue.prototype.$config = config

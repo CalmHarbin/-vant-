@@ -16,6 +16,11 @@
         <van-cell title="操作反馈" :to="{ name: 'Feedback' }" is-link />
         <van-cell title="上拉菜单" :to="{ name: 'Actionsheet' }" is-link />
         <van-cell title="时间选择器" :to="{ name: 'DatetimePicker' }" is-link />
+        <van-cell
+            title="上拉加载下拉刷新"
+            :to="{ name: 'Infinitescroll' }"
+            is-link
+        />
     </div>
 </template>
 

@@ -100,6 +100,18 @@ const DatetimePicker = [
     }
 ]
 
+const Infinitescroll = [
+    {
+        path: '/Infinitescroll',
+        name: 'Infinitescroll',
+        component: () => import('@/views/InfiniteScroll/index'),
+        meta: {
+            title: '时间选择器', // 标题设置在这里
+            keepAlive: false //是否缓存当前页面
+        }
+    }
+]
+
 export default new Router({
     // mode: 'history',
     base: config.routeUrl,
@@ -112,6 +124,7 @@ export default new Router({
         ...Feedback,
         ...Actionsheet,
         ...DatetimePicker,
+        ...Infinitescroll,
         {
             path: '/',
             name: 'index',

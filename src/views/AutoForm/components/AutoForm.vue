@@ -42,6 +42,7 @@ slot='key',//在key的后面
             </yd-cell-item>
             <slot :name="item.key"></slot>
         </template> -->
+        <!--eslint-disable-next-line-->
         <template v-for="(item, index) in list" v-if="item.type === 1">
             <van-field
                 :class="
@@ -291,6 +292,7 @@ export default {
                     if (!res.iserror) {
                         this.wxSDK_Ok = true
                         let json = res.data
+                        // eslint-disable-next-line
                         wx.config({
                             beta: true,
                             debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
@@ -324,6 +326,7 @@ export default {
         selectPeople(id, key, callback, readOnly) {
             if (readOnly) return
             let _this = this
+            // eslint-disable-next-line
             wx.invoke(
                 'selectEnterpriseContact',
                 {
@@ -334,6 +337,7 @@ export default {
                     selectedUserIds: id ? [id] : [] // 非必填，已选用户ID列表。用于多次选人时可重入，single模式下请勿填入多个id
                 },
                 function(res) {
+                    // eslint-disable-next-line
                     if (res.err_msg == 'selectEnterpriseContact:ok') {
                         if (typeof res.result === 'string') {
                             res.result = JSON.parse(res.result) //由于目前各个终端尚未完全兼容，需要开发者额外判断result类型以保证在各个终端的兼容性
