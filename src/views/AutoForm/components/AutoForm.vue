@@ -66,13 +66,38 @@ slot='key',//在key的后面
         </template>
         <!-- 调用组织架构选人,单选 -->
         <!-- <template v-else-if='item.type === 2'>
-            <yd-cell-item @click.native='selectPeople(form[item.key].id, item.key, item.callback, item.readonly)' arrow :class='item.hidden ? "none "+(item.class ? item.class : "") : item.class' :key='index'>
+            <yd-cell-item  arrow :key='index'>
                 <span slot="left">{{item.label}}<i class='required' v-if='item.required'>*</i></span>
                 <span slot="right" class='readonly' v-if='item.readonly'>{{form[item.key].name ? form[item.key].name : item.placeholder}}</span>
                 <span slot="right" v-else>{{form[item.key].name ? form[item.key].name : item.placeholder}}</span>
             </yd-cell-item>
-            <slot :name='item.key'></slot>
         </template> -->
+        <template v-else-if="item.type === 2">
+            <van-cell
+                :title="item.label"
+                :class="
+                    item.hidden
+                        ? 'none ' +
+                          (item.class ? item.class : '') +
+                          (item.required ? ' van-cell--required' : '')
+                        : item.class +
+                          (item.required ? ' van-cell--required' : '')
+                "
+                is-link
+                :value="
+                    form[item.key].name ? form[item.key].name : item.placeholder
+                "
+                @click.native="
+                    selectPeople(
+                        form[item.key].id,
+                        item.key,
+                        item.callback,
+                        item.readonly
+                    )
+                "
+            />
+            <slot :name="item.key"></slot>
+        </template>
 
         <!-- 上拉菜单选择 -->
         <template v-else-if="item.type === 3">
@@ -292,7 +317,7 @@ export default {
                     if (!res.iserror) {
                         this.wxSDK_Ok = true
                         let json = res.data
-                        // eslint-disable-next-line
+                        // eslint-disable-next-line no-undef
                         wx.config({
                             beta: true,
                             debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
@@ -310,7 +335,6 @@ export default {
                     }
                 })
                 .catch(err => {
-                    this.$dialog.loading.close()
                     this.$dialog.alert({ mes: err.message })
                 })
         },
@@ -326,7 +350,7 @@ export default {
         selectPeople(id, key, callback, readOnly) {
             if (readOnly) return
             let _this = this
-            // eslint-disable-next-line
+            // eslint-disable-next-line no-undef
             wx.invoke(
                 'selectEnterpriseContact',
                 {
@@ -337,8 +361,7 @@ export default {
                     selectedUserIds: id ? [id] : [] // 非必填，已选用户ID列表。用于多次选人时可重入，single模式下请勿填入多个id
                 },
                 function(res) {
-                    // eslint-disable-next-line
-                    if (res.err_msg == 'selectEnterpriseContact:ok') {
+                    if (res.err_msg === 'selectEnterpriseContact:ok') {
                         if (typeof res.result === 'string') {
                             res.result = JSON.parse(res.result) //由于目前各个终端尚未完全兼容，需要开发者额外判断result类型以保证在各个终端的兼容性
                         }
@@ -475,7 +498,6 @@ export default {
                         item.placeholder !== undefined
                             ? item.placeholder
                             : '请选择' + item.label
-                    item.maxlength = item.maxlength > 0 ? item.maxlength : 35
                     this.form[item.key] =
                         this.form[item.key] !== undefined
                             ? this.form[item.key]

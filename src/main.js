@@ -72,14 +72,14 @@ Vue.prototype.$loading = (message = '加载中') => {
     }, 100)
 }
 Vue.prototype.$loading.clear = () => {
-    //最少持续200毫秒,防止一闪而过
+    //最少持续500毫秒,防止一闪而过
+    if (isLoading) {
+        isLoading = false
+        return
+    }
     setTimeout(() => {
-        if (isLoading) {
-            isLoading = false
-        } else {
-            Toast.clear()
-        }
-    }, 200)
+        Toast.clear()
+    }, 500)
 }
 
 //针对ios微信流量器调用sdk的地址栏不改变的bug

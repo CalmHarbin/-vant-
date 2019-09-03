@@ -4,6 +4,7 @@
         <van-popup
             v-model="show"
             position="bottom"
+            get-container="#app"
             @close="$emit('input', false)"
             @open="$refs.picker && $refs.picker.setIndexes([default_index])"
         >

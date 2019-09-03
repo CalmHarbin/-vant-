@@ -67,6 +67,13 @@ export default {
                     required: false //是否必填, 可选
                 },
                 {
+                    type: 2, //输入框 , 必填
+                    key: 'ren', //key, 必填
+                    label: '审批人', //label, 可选
+                    value: '', //初始值, 可选
+                    required: false //是否必填, 可选
+                },
+                {
                     type: 1, //输入框 , 必填
                     key: 'address', //key, 必填
                     inputType: 'text', //输入框类型, 可选

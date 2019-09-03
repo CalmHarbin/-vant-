@@ -4,7 +4,7 @@ import vueConfig from '../../vue.config.js'
 const config = {
     serverUrl:
         process.env.NODE_ENV === 'development'
-            ? ''
+            ? 'http://wechat.dfd.cn:8084'
             : 'http://wechat.dfd.cn:8084', //服务器地址
     routeUrl: '/MobileWork/AppDefalut', //路由前缀
     staticUrl: vueConfig.publicPath + vueConfig.assetsDir //静态资源

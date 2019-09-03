@@ -190,6 +190,7 @@ export default {
                 loading: false, //是否在下拉刷新回调中
                 distance: 60, //滑动距离大于100时可释放刷新
                 startClientY: 0,
+                currentClientY: Math.pow(2, 32), //当前触摸位置
                 isDraging: false, //是否开始下拉刷新
                 statusText: '下拉刷新' //此时的状态描述
             },
@@ -351,6 +352,11 @@ export default {
             }
         },
         touchStartHandler(event) {
+            // console.log(
+            //     354,
+            //     event.touches[0].clientY,
+            //     this.getScrollTop(this.scrollview)
+            // )
             //正在执行下拉刷新则返回
             if (this.touches.loading) {
                 event.preventDefault()
@@ -375,8 +381,23 @@ export default {
             this.touches.startClientY = event.touches[0].clientY
         },
         touchMoveHandler(event) {
+            console.log(
+                379,
+                event.touches[0].clientY,
+                this.getScrollTop(this.scrollview)
+            )
+            //当滚动到顶部,且手指开始向下滑动就阻止默认行为
+            if (
+                event.touches[0].clientY > this.touches.currentClientY &&
+                this.getScrollTop(this.scrollview) === 0
+            ) {
+                console.log('到顶了')
+                event.preventDefault()
+                // return
+            }
             const touches = this.touches
-
+            //记录当前触摸位置
+            touches.currentClientY = event.touches[0].clientY
             //当向下滚动了则直接返回
             if (
                 this.getScrollTop(this.scrollview) > 0 ||
@@ -399,6 +420,11 @@ export default {
             // console.log('执行了')
             const currentY = event.touches[0].clientY
             // const currentX = event.touches[0].clientX
+
+            //防止手指直接下滑造成页面不能正常的滚动
+            if (!touches.isDraging && currentY < touches.startClientY) {
+                return
+            }
 
             //手指先先下拉,再向上滑,说明此时手指已经在触摸位置上方了
             if (
@@ -455,6 +481,7 @@ export default {
                 this.$refs.dragBox.getBoundingClientRect().top < this.offsetTop
             ) {
                 this.touches.isDraging = false
+                this.moveOffset = 0
                 return
             }
 
