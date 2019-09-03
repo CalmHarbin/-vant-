@@ -106,7 +106,7 @@ const Infinitescroll = [
         name: 'Infinitescroll',
         component: () => import('@/views/InfiniteScroll/index'),
         meta: {
-            title: '时间选择器', // 标题设置在这里
+            title: '下拉刷新', // 标题设置在这里
             keepAlive: false //是否缓存当前页面
         }
     }

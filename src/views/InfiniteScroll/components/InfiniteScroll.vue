@@ -257,7 +257,7 @@ export default {
             dragBox.addEventListener('touchend', this.touchEndHandler)
             //防止微信浏览器下拉出现域名
             document.body.addEventListener('touchmove', this.stopDragEvent, {
-                passive: false
+                passive: false //调用阻止默认行为
             })
             //容器距离顶部的距离
             this.offsetTop = this.$refs.dragBox.getBoundingClientRect().top
@@ -352,11 +352,6 @@ export default {
             }
         },
         touchStartHandler(event) {
-            // console.log(
-            //     354,
-            //     event.touches[0].clientY,
-            //     this.getScrollTop(this.scrollview)
-            // )
             //正在执行下拉刷新则返回
             if (this.touches.loading) {
                 event.preventDefault()
@@ -381,20 +376,6 @@ export default {
             this.touches.startClientY = event.touches[0].clientY
         },
         touchMoveHandler(event) {
-            console.log(
-                379,
-                event.touches[0].clientY,
-                this.getScrollTop(this.scrollview)
-            )
-            //当滚动到顶部,且手指开始向下滑动就阻止默认行为
-            if (
-                event.touches[0].clientY > this.touches.currentClientY &&
-                this.getScrollTop(this.scrollview) === 0
-            ) {
-                console.log('到顶了')
-                event.preventDefault()
-                // return
-            }
             const touches = this.touches
             //记录当前触摸位置
             touches.currentClientY = event.touches[0].clientY
