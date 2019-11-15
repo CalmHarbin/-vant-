@@ -52,9 +52,13 @@
                         <van-icon name="clear" />
                     </div>
                 </div>
-                <div class="add" id="add_img" v-show="!isGtNum" v-if="!isSee">
+                <div class="add" v-show="!isGtNum" v-if="!isSee">
                     <img src="./jia-1.png" alt="" />
                     <span>添加</span>
+                    <div
+                        id="add_img"
+                        style="position: absolute;left: 0;right: 0; top: 0;bottom: 0;"
+                    ></div>
                 </div>
             </div>
         </div>
@@ -318,6 +322,7 @@ export default {
     flex-wrap: wrap;
 }
 .imgWrap .add {
+    position: relative;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
