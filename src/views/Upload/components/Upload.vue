@@ -190,31 +190,21 @@ export default {
                                 }, 200)
                             })
                         } else {
-                            that.$dialog.toast({
-                                mes: '上传失败,服务器错误',
-                                timeout: 1500,
-                                icon: 'error'
-                            })
+                            that.$toast.fail('上传失败,服务器错误')
                         }
                     },
                     Error: function(up, err) {
                         //上传出错的时候触发
                         //上传动画结束
-                        that.$dialog.loading.close()
                         if (err.code === -601) {
-                            that.$dialog.toast({
-                                mes: '文件类型错误',
-                                timeout: 1500,
-                                icon: 'error'
-                            })
+                            that.$toast.fail('文件类型错误')
+                        } else if (err.code === -600) {
+                            that.$toast.fail('请上传20M以下附件')
+                        } else if (err.code === -200) {
+                            that.$toast.fail('上传地址错误')
                         } else {
-                            that.$dialog.toast({
-                                mes: '上传失败,请重新上传',
-                                timeout: 1500,
-                                icon: 'error'
-                            })
+                            that.$toast.fail('上传失败,请重新上传')
                         }
-                        console.log(err)
                     }
                 }
             })
@@ -312,6 +302,9 @@ export default {
             } else {
                 this.isGtNum = false
             }
+        },
+        isSee() {
+            this.$nextTick(() => this.upload())
         }
     }
 }

@@ -270,6 +270,12 @@ export default {
                 this.pullupdateText = '更新失败'
                 this.Retract(0, tip)
             })
+            this.$on('ydui.pullrefresh.finishLoad.load', (tip = true) => {
+                this.touches.statusText = '加载中'
+                this.touches.loading = true
+                this.moveOffset = this.double * this.touches.distance
+                this.pullupdateStatus = false
+            })
         },
         scrollHandler() {
             if (this.isLoading || this.isDone) return
@@ -478,7 +484,10 @@ export default {
                 return
             }
             //下拉刷新阻止浏览器默认行为
-            if (this.getScrollTop(this.scrollview) === 0) {
+            if (
+                this.getScrollTop(this.scrollview) === 0 &&
+                currentY !== this.touches.startClientY
+            ) {
                 event.preventDefault()
             }
 
