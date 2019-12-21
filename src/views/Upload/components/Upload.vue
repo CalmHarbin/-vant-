@@ -32,7 +32,7 @@
                 >
                     <img src="./default.png" alt="" v-if="item.type === 0" />
                     <img
-                        :src="'http://wechat.dfd.cn:8084' + item.src"
+                        :src="$config.serverUrl + item.src"
                         alt=""
                         v-if="item.type === 1"
                     />
@@ -73,7 +73,6 @@
 
 <script>
 /* eslint-disable no-undef */
-import config from '@/config/index'
 import { wxSDK } from '@/api/api'
 
 export default {
@@ -99,17 +98,23 @@ export default {
             uploader: null, //上传对象
             isGtNum: false, //是否大于最大上传数量
             hackReset: true, //强制更新
-            percent: 0, //上传进度
-            config: config
+            percent: 0 //上传进度
         }
     },
     created() {
+        if (this.maxNum === 0) return
+        //控制最大数量
+        if (this.files.length >= this.maxNum) {
+            this.isGtNum = true
+        } else {
+            this.isGtNum = false
+        }
         this.wxSDK()
     },
     mounted() {
         if (typeof plupload === 'undefined') {
             let script = document.createElement('script')
-            script.src = config.staticUrl + '/js/plupload.full.min.js'
+            script.src = this.$config.staticUrl + '/js/plupload.full.min.js'
             document.body.appendChild(script)
             script.onload = () => {
                 if (!this.isSee) {
@@ -198,6 +203,7 @@ export default {
                         }
                     },
                     Error: function(up, err) {
+                        that.percent = 0
                         //上传出错的时候触发
                         //上传动画结束
                         if (err.code === -601) {
@@ -227,8 +233,8 @@ export default {
             if (type === 1) {
                 //使用图片预览sdk
                 wx.previewImage({
-                    current: that.config.serverUrl + that.files[index].src, // 当前显示图片的http链接
-                    urls: [that.config.serverUrl + that.files[index].src] // 需要预览的图片http链接列表
+                    current: that.$config.serverUrl + that.files[index].src, // 当前显示图片的http链接
+                    urls: [that.$config.serverUrl + that.files[index].src] // 需要预览的图片http链接列表
                 })
             } else {
                 //使用附件预览sdk
@@ -240,13 +246,13 @@ export default {
                         if (res.checkResult.previewFile) {
                             wx.previewFile({
                                 url:
-                                    that.config.serverUrl +
+                                    that.$config.serverUrl +
                                     that.files[index].src, // 需要预览文件的地址(必填，可以使用相对路径)
                                 size: that.files[index].size * 1 // 需要预览文件的字节大小(必填)
                             })
                         } else {
                             location.href =
-                                that.config.serverUrl + that.files[index].src
+                                that.$config.serverUrl + that.files[index].src
                         }
                     }
                 })

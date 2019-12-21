@@ -45,7 +45,6 @@
 
 <script>
 /* eslint-disable no-undef */
-import config from '@/config/index'
 import { wxSDK, downloadImage } from '@/api/api'
 export default {
     name: 'upload',
@@ -75,11 +74,18 @@ export default {
             hackReset: true, //强制更新
             counts: null, //每次最大上传数量
             serverIds: [], //服务器端id
-            config: config,
             loading: false
         }
     },
-    created() {},
+    created() {
+        if (this.maxNum === 0) return
+        //控制最大数量
+        if (this.files.length >= this.maxNum) {
+            this.isGtNum = true
+        } else {
+            this.isGtNum = false
+        }
+    },
     updated() {},
     methods: {
         /**
@@ -184,17 +190,13 @@ export default {
                 .then(res => {
                     this.loading = false
                     for (let item of res.data) {
-                        this.files.push(this.config.serverUrl + item)
+                        this.files.push(this.$config.serverUrl + item)
                     }
                     // this.files = [...this.files, ...res.data]
                 })
                 .catch(err => {
                     this.loading = false
-                    this.$dialog.toast({
-                        mes: err.message,
-                        timeout: 1500,
-                        icon: 'error'
-                    })
+                    this.$toast.fail(err.message)
                 })
         },
         /**

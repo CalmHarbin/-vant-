@@ -229,7 +229,7 @@ export default {
                         `${this.formatter_time.split(':')[1]}分`
                     ]
                 }
-                this.$refs.datetime.$children[0].setValues(values)
+                this.$refs.datetime.$children[0].$children[0].setValues(values)
             }
         }
     },
