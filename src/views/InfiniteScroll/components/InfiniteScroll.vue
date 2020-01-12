@@ -4,7 +4,11 @@
         <div
             class="dragBox"
             ref="dragBox"
-            :style="{ transform: `translateY(${moveOffset / double}px)` }"
+            :style="
+                moveOffset
+                    ? { transform: 'translateY(' + moveOffset / double + 'px)' }
+                    : ''
+            "
         >
             <!-- 下拉刷新动画效果 -->
             <div
@@ -454,6 +458,10 @@ export default {
             // console.log(this.moveOffset)
         },
         touchEndHandler(event) {
+            //如果触摸位置和抬起位置相同,则说明是点击
+            if (this.touches.startClientY === event.changedTouches[0].clientY)
+                return
+
             const touches = this.touches
             // console.log(this.touches.isDraging)
             //正在执行下拉刷新则返回

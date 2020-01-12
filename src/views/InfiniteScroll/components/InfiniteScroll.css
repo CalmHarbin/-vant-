@@ -1,0 +1,93 @@
+@keyframes intact {
+    0% {
+        border-radius: 50%;
+    }
+
+    100% {
+        border-radius: 0%;
+    }
+}
+
+.yd-list-loading {
+    padding: 0.1rem 0;
+    text-align: center;
+    font-size: 0.26rem;
+    color: #999;
+    height: 0.66rem;
+    box-sizing: content-box;
+}
+
+.yd-list-loading-box {
+    height: 0.66rem;
+    overflow: hidden;
+    line-height: 0.66rem;
+}
+
+.yd-list-loading img {
+    height: 0.66rem;
+    display: inline-block;
+}
+
+.yd-list-loading svg {
+    width: 0.66rem;
+    height: 0.66rem;
+}
+
+.yd-list-donetip {
+    font-size: 0.24rem;
+    text-align: center;
+    padding: 0.25rem 0;
+    color: #777;
+}
+
+.yd-pullTip {
+    text-align: center;
+    font-size: 0.24rem;
+    position: absolute;
+    left: 0;
+    right: 0;
+    background: #eeeeee;
+    color: #a5a5a5;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.yd-pullTip img {
+    height: 20px;
+    margin-right: 12px;
+    margin-bottom: -1px;
+    transition: transform 0.1s linear;
+    transform: rotate(180deg);
+}
+
+.yd-pullTip img.rotate {
+    transform: rotate(0deg);
+}
+
+.yd-Tip {
+    z-index: 99999999;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 30px;
+    line-height: 30px;
+    font-size: 0.24rem;
+    overflow: hidden;
+    text-align: center;
+    color: #fff;
+}
+
+.yd-Tip span {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    display: block;
+    width: 100%;
+    padding-top: 100%;
+    border-radius: 50%;
+    animation: intact 0.1s linear forwards;
+}

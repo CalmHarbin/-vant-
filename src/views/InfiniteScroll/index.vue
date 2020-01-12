@@ -4,8 +4,10 @@
             :pullcallback="pullcallback"
             :callback="callback"
             ref="infinitescrollDemo"
+            pullTipBgColor="red"
         >
             <div slot="list">
+                <button @click="btn_fun">按钮</button>
                 我是滚动的容器<br />
                 体验上拉加载和下拉刷新
                 <div class="label">组件说明:</div>
@@ -49,7 +51,7 @@
 </template>
 
 <script>
-import YdInfinitescroll from './components/InfiniteScroll'
+import YdInfinitescroll from './components/InfiniteScroll.vue'
 export default {
     data() {
         return {
@@ -74,6 +76,9 @@ export default {
                     'ydui.infinitescroll.finishLoad'
                 )
             }, 1000)
+        },
+        btn_fun() {
+            alert(1)
         }
     }
 }
