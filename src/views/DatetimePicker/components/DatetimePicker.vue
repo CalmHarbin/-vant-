@@ -200,7 +200,6 @@ export default {
          * @return { undefined }
          */
         open() {
-<<<<<<< Updated upstream
             if (this.$refs.datetime) {
                 let values = []
                 if (this.type === 'datetime') {
@@ -232,38 +231,7 @@ export default {
                     ]
                 }
                 this.$refs.datetime.$children[0].$children[0].setValues(values)
-=======
-            let values = []
-            if (this.type === 'datetime') {
-                // "2019-12-11 22:12"
-                values = [
-                    `${this.formatter_time.split(' ')[0].split('/')[0]}年`,
-                    `${this.formatter_time.split(' ')[0].split('/')[1]}月`,
-                    `${this.formatter_time.split(' ')[0].split('/')[2]}日`,
-                    `${this.formatter_time.split(' ')[1].split(':')[0]}时`,
-                    `${this.formatter_time.split(' ')[1].split(':')[1]}分`
-                ]
-            } else if (this.type === 'date') {
-                // "2019-12-11"
-                values = [
-                    `${this.formatter_time.split('/')[0]}年`,
-                    `${this.formatter_time.split('/')[1]}月`,
-                    `${this.formatter_time.split('/')[2]}日`
-                ]
-            } else if (this.type === 'year-month') {
-                // "2019-12"
-                values = [
-                    `${this.formatter_time.split('/')[0]}年`,
-                    `${this.formatter_time.split('/')[1]}月`
-                ]
-            } else if (this.type === 'time') {
-                values = [
-                    `${this.formatter_time.split(':')[0]}时`,
-                    `${this.formatter_time.split(':')[1]}分`
-                ]
->>>>>>> Stashed changes
             }
-            this.$refs.datetime.$children[0].$children[0].setValues(values)
         }
     },
     watch: {
